@@ -1,4 +1,5 @@
 // We may keep this somewhere else, but for now it's here.
+// i have 75 chars designed for the secret, so we can use 75^9 combinations for the short code
 const secret = "v&6HVd^A%83hsfDpE!XIcq_yje#Wxgw2oSB4($l?P9Z7On0i+@5MTbkGaLF)RUKQY1zJrCN*utm";
 
 // helper function to DECODE
@@ -32,12 +33,12 @@ function generateShortCode(storeId, customerId) {
   const storeCode = getCodeFromNumber(storeId, 2); // 2 char for storeId, 75^2 should be ok for [1,200]
   const customerCode = getCodeFromNumber(customerId, 3); // 2 char for storeId, 75^3 should be ok for [1,10000]
 
-  const timestamp = Math.floor(new Date().getTime() / 1000); // 获取当前时间戳
+  const timestamp = Math.floor(new Date().getTime() / 1000); // get current timestamp in seconds
 
   // try to get the meaningful timestamp range smaller, 1687930042 here can be changed to any other number
   const partsToStore = timestamp - 1687930042;
 
-  const timestampCode = getCodeFromNumber(partsToStore, 4); // 用4个字符存储映射后的时间戳
+  const timestampCode = getCodeFromNumber(partsToStore, 4); // use the other 4 char for timestamp, 75^4 should be enough
 
   let result = storeCode + timestampCode + customerCode;
 
